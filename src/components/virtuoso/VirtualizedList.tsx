@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { Virtuoso } from "react-virtuoso";
-import { Message } from "./messages/utils";
-import { WithImageMessage } from "./messages/WithImageMessage";
+import { Message } from "../messages/utils";
+import { WithImageMessage } from "../messages/WithImageMessage";
 
 export const VirtualizedList: React.FC<{
   height?: string | number;
   width?: string | number;
   messages: Message[];
   firstItemIndex?: number;
-}> = ({ width, height, messages, firstItemIndex }) => {
-  // const [isScrolling, setIsScrolling] = useState(false);
+  startReached: () => void;
+}> = ({ width, height, messages, firstItemIndex, startReached }) => {
   return (
     <Virtuoso
       style={{ height, width }}
       data={messages}
       itemContent={(index, data) => <WithImageMessage item={data} />}
       alignToBottom
+      followOutput
       firstItemIndex={firstItemIndex}
       initialTopMostItemIndex={{ index: "LAST" }}
       // isScrolling={setIsScrolling}
@@ -28,9 +29,7 @@ export const VirtualizedList: React.FC<{
       endReached={(index) => {
         console.log("endReached called", { index });
       }}
-      startReached={(index) => {
-        console.log("startReached called", { index });
-      }}
+      startReached={startReached}
     />
   );
 };

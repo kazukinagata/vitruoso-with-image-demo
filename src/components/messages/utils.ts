@@ -19,7 +19,7 @@ export function message(index = 0): Message {
     bgColor: toggleBg(index),
     title: faker.lorem.sentence(),
     body: index % 2 ? faker.lorem.lines(10) : faker.lorem.sentence(),
-    image: faker.image.food(640, 480, true),
+    image: index % 3 > 0 ? faker.image.food(640, 480, true) : undefined,
   };
 }
 export const getMessage = (index: number) => {

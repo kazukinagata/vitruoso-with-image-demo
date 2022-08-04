@@ -1,8 +1,12 @@
 import { Button, Container, HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { generateMessages, initialData, Message } from "../messages/utils";
-import { VirtualizedList } from "../VirtualizedList";
+import {
+  generateMessages,
+  initialData,
+  Message,
+} from "../components/messages/utils";
+import { VirtualizedList } from "../components/virtuoso/VirtualizedList";
 
 const SIZE = 20;
 const FIRST_ITEM_INDEX = 10000;
@@ -16,31 +20,30 @@ const Home: NextPage = () => {
   }, []);
 
   const onClickAppend = () => {
-    setMessages((prev) => [
-      ...prev,
-      ...generateMessages(SIZE, prev.length - 1),
-    ]);
+    setMessages((prev) => [...prev, ...generateMessages(1, prev.length - 1)]);
   };
 
-  const onClickPrepend = () => {
-    setMessages((prev) => [
-      ...generateMessages(SIZE, prev.length - 1),
-      ...prev,
-    ]);
-    setFirstItemIndex((prev) => prev - SIZE);
+  const prependItems = () => {
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...generateMessages(SIZE, prev.length - 1),
+        ...prev,
+      ]);
+      setFirstItemIndex((prev) => prev - SIZE);
+    }, 1000);
   };
 
   return (
-    <Container maxWidth={"md"}>
+    <Container maxWidth={"md"} height="640px">
       <HStack mb={8}>
         <Button onClick={onClickAppend}>Append</Button>
-        <Button onClick={onClickPrepend}>Prepend</Button>
       </HStack>
       {messages.length && (
         <VirtualizedList
-          height={"640px"}
+          height={"100%"}
           messages={messages}
           firstItemIndex={firstItemIndex}
+          startReached={prependItems}
         />
       )}
     </Container>
