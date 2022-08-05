@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 faker.seed(123);
 export interface Message {
-  id: number;
+  id: number | string;
   title: string;
   body: string;
   image?: string;
@@ -15,7 +15,7 @@ export function toggleBg(index: number) {
 }
 export function message(index = 0): Message {
   return {
-    id: index + 1,
+    id: faker.git.commitSha(),
     bgColor: toggleBg(index),
     title: faker.lorem.sentence(),
     body: index % 2 ? faker.lorem.lines(10) : faker.lorem.sentence(),

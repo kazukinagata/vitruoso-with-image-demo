@@ -11,7 +11,7 @@ import { VirtualizedList } from "../components/virtuoso/VirtualizedList";
 const SIZE = 20;
 const FIRST_ITEM_INDEX = 10000;
 
-const Home: NextPage = () => {
+const Virtuoso: NextPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [firstItemIndex, setFirstItemIndex] =
     useState<number>(FIRST_ITEM_INDEX);
@@ -50,4 +50,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Virtuoso;

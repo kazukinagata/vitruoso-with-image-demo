@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Message } from "../messages/utils";
 import { WithImageMessage } from "../messages/WithImageMessage";
@@ -14,7 +13,9 @@ export const VirtualizedList: React.FC<{
     <Virtuoso
       style={{ height, width }}
       data={messages}
-      itemContent={(index, data) => <WithImageMessage item={data} />}
+      itemContent={(index, data) => (
+        <WithImageMessage item={data} index={index} />
+      )}
       alignToBottom
       followOutput
       firstItemIndex={firstItemIndex}

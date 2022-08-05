@@ -3,11 +3,14 @@ import { Message } from "./utils";
 
 interface Props {
   item: Message;
+  index?: number;
 }
-export const WithImageMessage: React.FC<Props> = ({ item }) => {
+export const WithImageMessage: React.FC<Props> = ({ item, index }) => {
   return (
-    <Box bgColor={item.bgColor}>
-      <chakra.h2>{item.title}</chakra.h2>
+    <Box bgColor={item.bgColor} p={2}>
+      <chakra.h2 fontWeight={"bold"} pb={2}>
+        {`${item.title}`}
+      </chakra.h2>
       <chakra.p>{item.body}</chakra.p>
       {item.image && (
         <Box>

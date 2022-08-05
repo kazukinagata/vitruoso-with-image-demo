@@ -3,12 +3,12 @@ import { Message } from "./utils";
 
 interface Props {
   item: Message;
-  isScrolling?: boolean;
+  index?: number;
 }
-export const TextOnlyMessage: React.FC<Props> = ({ item }) => {
+export const TextOnlyMessage: React.FC<Props> = ({ item, index }) => {
   return (
-    <Box bgColor={item.bgColor}>
-      <chakra.h2>{item.title}</chakra.h2>
+    <Box bgColor={item.bgColor} p={2}>
+      <chakra.h2 fontWeight={"bold"}>{`${item.title}`}</chakra.h2>
       <Box display={"flex"}>
         <Box>{item.body}</Box>
       </Box>
