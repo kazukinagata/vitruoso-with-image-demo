@@ -2,6 +2,7 @@ import { Item } from "react-cool-virtual";
 import { Message } from "../messages/utils";
 import { WithImageMessage } from "../messages/WithImageMessage";
 import { TextOnlyMessage } from "../messages/TextOnlyMessage";
+import { useRef } from "react";
 
 interface Props {
   messages: Message[];
@@ -15,6 +16,7 @@ export const VirtualizedList: React.FC<Props> = ({
   innerRef,
   items,
 }) => {
+  // const itemHeights = useRef<Record<string | number, number>>();
   return (
     <div style={{ height: "100%", overflow: "auto" }} ref={outerRef}>
       <div ref={innerRef}>
