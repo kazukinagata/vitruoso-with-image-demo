@@ -47,15 +47,15 @@ const TanstackVirtual: NextPage = () => {
     enableSmoothScroll: false,
     debug: true,
     onChange: async (instance) => {
-      // console.log("onchange", instance);
+      console.log("onchange", instance);
       // @ts-ignore
       const startIndex = instance.range.startIndex;
       if (scrolledOnMount && startIndex < 1 && !prepending) {
         console.log("prependItems!!!");
-        await prependItems();
+        // await prependItems();
         console.log("scrollTo", startIndex + SIZE);
-        // 何故か -1 するぐらいでちょうどいい
-        scrollToIndex(startIndex + SIZE - 1);
+        // // defaultのoverscanが 1 なので、 -1 すると一番合う
+        // scrollToIndex(startIndex + SIZE - 1);
       }
     },
   });
