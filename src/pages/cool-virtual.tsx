@@ -49,13 +49,13 @@ const CoolVirtual: NextPage = () => {
       },
     });
 
-  // useEffect(() => {
-  //   if (scrolledOnMount) return;
-  //   if (!messages.length) return;
-  //   console.log("scrollToItem", messages.length - 1);
-  //   scrollToItem(messages.length - 1);
-  //   scrolledOnMount = true;
-  // }, [scrollToItem, messages]);
+  useEffect(() => {
+    if (scrolledOnMount) return;
+    if (!messages.length) return;
+    console.log("scrollToItem", messages.length - 1);
+    scrollToItem(messages.length - 1);
+    scrolledOnMount = true;
+  }, [scrollToItem, messages]);
 
   useLayoutEffect(() => {
     // After the list updated, maintain the previous scroll position for the user

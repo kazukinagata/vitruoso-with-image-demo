@@ -12,6 +12,8 @@ import { VirtualizedList } from "../components/tanstack-virtual/VitrualizedList"
 let scrolledOnMount = false;
 const SIZE = 20;
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const TanstackVirtual: NextPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [prepending, setPrepending] = useState(false);
@@ -24,37 +26,42 @@ const TanstackVirtual: NextPage = () => {
     setMessages((prev) => [...prev, ...generateMessages(1, prev.length - 1)]);
   };
 
-  const prependItems = () => {
+  const prependItems = async () => {
     setPrepending(true);
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...generateMessages(SIZE, prev.length - 1),
-        ...prev,
-      ]);
-      setPrependedNum({ num: SIZE });
-    }, 1000);
+    await sleep(1000);
+    setMessages((prev) => [
+      ...generateMessages(SIZE, prev.length - 1),
+      ...prev,
+    ]);
+    setPrependedNum({ num: SIZE });
+    setPrepending(false);
   };
 
   const parentRef = useRef<HTMLDivElement>(null);
-  const { getTotalSize, getVirtualItems, scrollToIndex, scrollElement } =
-    useVirtualizer({
-      count: messages.length,
-      getScrollElement: () => parentRef.current,
-      estimateSize: () => 500,
-      getItemKey: (index) => messages[index]?.id,
-      enableSmoothScroll: false,
-      // observeElementOffset: (instance, cb) => {}
-    });
-
-  useEffect(() => {
-    if (!scrollElement) return;
-    if (!scrolledOnMount) return;
-    console.log(scrollElement.scrollTop, prepending);
-    if (scrollElement.scrollTop < 200 && !prepending) {
-      console.log("prependItem!");
-      prependItems();
-    }
+  const { getTotalSize, getVirtualItems, scrollToIndex } = useVirtualizer({
+    count: messages.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: (index) =>
+      messages[index] && messages[index].image ? 600 : 200,
+    getItemKey: (index) => messages[index]?.id,
+    enableSmoothScroll: false,
+    debug: true,
+    onChange: async (instance) => {
+      // console.log("onchange", instance);
+      // @ts-ignore
+      const startIndex = instance.range.startIndex;
+      if (scrolledOnMount && startIndex < 1 && !prepending) {
+        console.log("prependItems!!!");
+        await prependItems();
+        console.log("scrollTo", startIndex + SIZE);
+        // 何故か -1 するぐらいでちょうどいい
+        scrollToIndex(startIndex + SIZE - 1);
+      }
+    },
   });
+  const items = getVirtualItems();
+  const startIndex = items[0]?.index || 0;
+
   useEffect(() => {
     if (!messages.length) return;
     if (scrolledOnMount) return;
@@ -62,11 +69,15 @@ const TanstackVirtual: NextPage = () => {
     scrolledOnMount = true;
   }, [scrollToIndex, messages.length]);
 
-  useEffect(() => {
-    if (!prependedNum) return;
-    scrollToIndex(SIZE);
-    setPrepending(false);
-  }, [prependedNum, scrollToIndex]);
+  // 上方にページネーションで追加されたらscrooToIndexで位置調整する
+  // useEffect(() => {
+  //   if (!prependedNum) return;
+  //   console.log("scrolle to ", prependedNum.num);
+  //   const num = prependedNum.num;
+  //   // 何故か +1 した方が位置が合う
+  //   scrollToIndex(num + 1);
+  //   setPrepending(false);
+  // }, [prependedNum, scrollToIndex]);
 
   return (
     <Container maxWidth={"md"} height="640px">
@@ -75,6 +86,7 @@ const TanstackVirtual: NextPage = () => {
         <Button onClick={prependItems}>Prepend</Button>
       </HStack>
       <p>items: {messages.length}</p>
+      <p>startIndex: {startIndex}</p>
       <VirtualizedList
         messages={messages}
         parentRef={parentRef}
