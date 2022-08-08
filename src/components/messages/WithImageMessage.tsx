@@ -9,7 +9,7 @@ export const WithImageMessage: React.FC<Props> = ({ item, index }) => {
   return (
     <Box bgColor={item.bgColor} p={2}>
       <chakra.h2 fontWeight={"bold"} pb={2}>
-        {`${item.title}`}
+        {`${index} ${item.title}`}
       </chakra.h2>
       <chakra.p>{item.body}</chakra.p>
       {item.image && (

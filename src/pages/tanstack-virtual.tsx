@@ -46,16 +46,19 @@ const TanstackVirtual: NextPage = () => {
     getItemKey: (index) => messages[index]?.id,
     enableSmoothScroll: false,
     debug: true,
+    overscan: 3,
     onChange: async (instance) => {
       console.log("onchange", instance);
       // @ts-ignore
+      // NOTE: instace.range is a private field
       const startIndex = instance.range.startIndex;
       if (scrolledOnMount && startIndex < 1 && !prepending) {
         console.log("prependItems!!!");
-        // await prependItems();
-        console.log("scrollTo", startIndex + SIZE);
-        // // defaultのoverscanが 1 なので、 -1 すると一番合う
-        // scrollToIndex(startIndex + SIZE - 1);
+        await prependItems();
+        // @ts-ignore
+        console.log("scrollTo", instance.range.startIndex + SIZE);
+        // @ts-ignore
+        scrollToIndex(instance.range.startIndex + SIZE);
       }
     },
   });
@@ -86,7 +89,7 @@ const TanstackVirtual: NextPage = () => {
         <Button onClick={prependItems}>Prepend</Button>
       </HStack>
       <p>items: {messages.length}</p>
-      <p>startIndex: {startIndex}</p>
+      <p>overscanStartIndex: {startIndex}</p>
       <VirtualizedList
         messages={messages}
         parentRef={parentRef}
