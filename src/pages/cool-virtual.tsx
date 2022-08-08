@@ -70,11 +70,11 @@ const CoolVirtual: NextPage = () => {
 
   return (
     <Layout>
-      <Container maxWidth={"md"} height="640px">
-        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+      <Container maxWidth={"md"} height="600px">
+        <chakra.h2 fontWeight="bold" fontSize="lg">
           React Cool Virtual
         </chakra.h2>
-        <HStack mb={8}>
+        {/* <HStack mb={8}>
           <Button onClick={onClickAppend}>Append</Button>
           <Button
             onClick={() => {
@@ -83,7 +83,7 @@ const CoolVirtual: NextPage = () => {
           >
             Scroll to bottom
           </Button>
-        </HStack>
+        </HStack> */}
         <p>items: {messages.length}</p>
         <VirtualizedList
           messages={messages}

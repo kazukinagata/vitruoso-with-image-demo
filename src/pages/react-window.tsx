@@ -36,7 +36,7 @@ const Row: React.FC<RowProps> = ({ data, index, setSize }) => {
         backgroundColor: isEven ? "rgba(0, 0, 255, .1)" : "transparent",
       }}
     >
-      <WithImageMessage item={data[index]} index={index} />
+      <WithImageMessage item={data[index]} index={data.length - index} />
     </div>
   );
 };
@@ -104,8 +104,8 @@ const ReactWindowSimple: NextPage = () => {
 
   return (
     <Layout>
-      <Container maxWidth={"md"} height="640px">
-        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+      <Container maxWidth={"md"} height="600px">
+        <chakra.h2 fontWeight="bold" fontSize="lg">
           React Window
         </chakra.h2>
         <p>items: {messages.length}</p>

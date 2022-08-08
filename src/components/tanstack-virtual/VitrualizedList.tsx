@@ -47,7 +47,7 @@ export const VirtualizedList: React.FC<Props> = ({
             >
               <WithImageMessage
                 item={messages[virtualRow.index]}
-                index={virtualRow.index}
+                index={messages.length - virtualRow.index}
               />
             </div>
           ))}

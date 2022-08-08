@@ -17,7 +17,7 @@ export function message(index = 0): Message {
   return {
     id: faker.git.commitSha(),
     bgColor: toggleBg(index),
-    title: faker.lorem.sentence(),
+    title: faker.animal.dog(),
     body: index % 2 ? faker.lorem.lines(10) : faker.lorem.sentence(),
     image: index % 3 > 0 ? faker.image.food(640, 480, true) : undefined,
   };

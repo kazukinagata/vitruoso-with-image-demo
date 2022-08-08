@@ -36,14 +36,14 @@ const Virtuoso: NextPage = () => {
 
   return (
     <Layout>
-      <Container maxWidth={"md"} height="640px">
-        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+      <Container maxWidth={"md"} height="600px">
+        <chakra.h2 fontWeight="bold" fontSize="lg">
           React Virtuoso
         </chakra.h2>
 
-        <HStack mb={8}>
+        {/* <HStack mb={8}>
           <Button onClick={onClickAppend}>Append</Button>
-        </HStack>
+        </HStack> */}
         {messages.length && (
           <VirtualizedList
             height={"100%"}

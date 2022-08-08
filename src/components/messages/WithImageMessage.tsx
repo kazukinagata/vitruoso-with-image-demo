@@ -13,7 +13,7 @@ export const WithImageMessage: React.FC<Props> = ({ item, index }) => {
       </chakra.h2>
       <chakra.p>{item.body}</chakra.p>
       {item.image && (
-        <Box>
+        <Box height="480px">
           <Image src={item.image} alt={item.title} width={640} height={480} />
         </Box>
       )}
