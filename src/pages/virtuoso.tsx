@@ -1,4 +1,4 @@
-import { Button, Container, HStack } from "@chakra-ui/react";
+import { Button, chakra, Container, HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import {
@@ -7,6 +7,7 @@ import {
   Message,
 } from "../components/messages/utils";
 import { VirtualizedList } from "../components/virtuoso/VirtualizedList";
+import { Layout } from "../Layout";
 
 const SIZE = 20;
 const FIRST_ITEM_INDEX = 10000;
@@ -34,19 +35,25 @@ const Virtuoso: NextPage = () => {
   };
 
   return (
-    <Container maxWidth={"md"} height="640px">
-      <HStack mb={8}>
-        <Button onClick={onClickAppend}>Append</Button>
-      </HStack>
-      {messages.length && (
-        <VirtualizedList
-          height={"100%"}
-          messages={messages}
-          firstItemIndex={firstItemIndex}
-          startReached={prependItems}
-        />
-      )}
-    </Container>
+    <Layout>
+      <Container maxWidth={"md"} height="640px">
+        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+          React Virtuoso
+        </chakra.h2>
+
+        <HStack mb={8}>
+          <Button onClick={onClickAppend}>Append</Button>
+        </HStack>
+        {messages.length && (
+          <VirtualizedList
+            height={"100%"}
+            messages={messages}
+            firstItemIndex={firstItemIndex}
+            startReached={prependItems}
+          />
+        )}
+      </Container>
+    </Layout>
   );
 };
 

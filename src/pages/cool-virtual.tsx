@@ -1,4 +1,4 @@
-import { Button, Container, HStack } from "@chakra-ui/react";
+import { Button, chakra, Container, HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import {
   Dispatch,
@@ -14,6 +14,7 @@ import {
   initialData,
   Message,
 } from "../components/messages/utils";
+import { Layout } from "../Layout";
 
 const SIZE = 20;
 let scrolledOnMount = false;
@@ -68,25 +69,30 @@ const CoolVirtual: NextPage = () => {
   // console.log({ messages });
 
   return (
-    <Container maxWidth={"md"} height="640px">
-      <HStack mb={8}>
-        <Button onClick={onClickAppend}>Append</Button>
-        <Button
-          onClick={() => {
-            scrollToItem(messages.length - 1);
-          }}
-        >
-          Scroll to bottom
-        </Button>
-      </HStack>
-      <p>items: {messages.length}</p>
-      <VirtualizedList
-        messages={messages}
-        outerRef={outerRef}
-        innerRef={innerRef}
-        items={items}
-      />
-    </Container>
+    <Layout>
+      <Container maxWidth={"md"} height="640px">
+        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+          React Cool Virtual
+        </chakra.h2>
+        <HStack mb={8}>
+          <Button onClick={onClickAppend}>Append</Button>
+          <Button
+            onClick={() => {
+              scrollToItem(messages.length - 1);
+            }}
+          >
+            Scroll to bottom
+          </Button>
+        </HStack>
+        <p>items: {messages.length}</p>
+        <VirtualizedList
+          messages={messages}
+          outerRef={outerRef}
+          innerRef={innerRef}
+          items={items}
+        />
+      </Container>
+    </Layout>
   );
 };
 

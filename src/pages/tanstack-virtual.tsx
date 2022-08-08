@@ -1,13 +1,14 @@
-import { Container, HStack, Button } from "@chakra-ui/react";
-import { useVirtualizer, Range } from "@tanstack/react-virtual";
+import { Container, HStack, Button, chakra } from "@chakra-ui/react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { NextPage } from "next";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   generateMessages,
   initialData,
   Message,
 } from "../components/messages/utils";
 import { VirtualizedList } from "../components/tanstack-virtual/VitrualizedList";
+import { Layout } from "../Layout";
 
 let scrolledOnMount = false;
 const SIZE = 20;
@@ -83,20 +84,26 @@ const TanstackVirtual: NextPage = () => {
   // }, [prependedNum, scrollToIndex]);
 
   return (
-    <Container maxWidth={"md"} height="640px">
-      <HStack mb={8}>
-        <Button onClick={onClickAppend}>Append</Button>
-        <Button onClick={prependItems}>Prepend</Button>
-      </HStack>
-      <p>items: {messages.length}</p>
-      <p>overscanStartIndex: {startIndex}</p>
-      <VirtualizedList
-        messages={messages}
-        parentRef={parentRef}
-        getTotalSize={getTotalSize}
-        getVirtualItems={getVirtualItems}
-      />
-    </Container>
+    <Layout>
+      <Container maxWidth={"md"} height="640px">
+        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+          Tanstack Virtual
+        </chakra.h2>
+
+        <HStack mb={8}>
+          <Button onClick={onClickAppend}>Append</Button>
+          <Button onClick={prependItems}>Prepend</Button>
+        </HStack>
+        <p>items: {messages.length}</p>
+        <p>overscanStartIndex: {startIndex}</p>
+        <VirtualizedList
+          messages={messages}
+          parentRef={parentRef}
+          getTotalSize={getTotalSize}
+          getVirtualItems={getVirtualItems}
+        />
+      </Container>
+    </Layout>
   );
 };
 

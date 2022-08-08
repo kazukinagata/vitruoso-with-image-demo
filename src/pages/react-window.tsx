@@ -1,13 +1,6 @@
-import { Container } from "@chakra-ui/react";
+import { chakra, Container } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { VariableSizeList, ListOnItemsRenderedProps } from "react-window";
 import {
   generateMessages,
@@ -16,6 +9,7 @@ import {
 } from "../components/messages/utils";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { WithImageMessage } from "../components/messages/WithImageMessage";
+import { Layout } from "../Layout";
 
 const SIZE = 20;
 let scrolledOnMount = false;
@@ -109,29 +103,34 @@ const ReactWindowSimple: NextPage = () => {
   }, [messages.length]);
 
   return (
-    <Container maxWidth={"md"} height="640px">
-      <p>items: {messages.length}</p>
+    <Layout>
+      <Container maxWidth={"md"} height="640px">
+        <chakra.h2 mb={8} fontWeight="bold" fontSize="lg">
+          React Window
+        </chakra.h2>
+        <p>items: {messages.length}</p>
 
-      <AutoSizer>
-        {({ height, width }) => (
-          <VariableSizeList
-            ref={listRef}
-            height={height}
-            width={width}
-            itemCount={messages.length}
-            itemSize={getSize}
-            onItemsRendered={handleItemsRendered}
-            itemData={messages}
-          >
-            {({ data, index, style }) => (
-              <div style={style}>
-                <Row data={data} index={index} setSize={setSize} />
-              </div>
-            )}
-          </VariableSizeList>
-        )}
-      </AutoSizer>
-    </Container>
+        <AutoSizer>
+          {({ height, width }) => (
+            <VariableSizeList
+              ref={listRef}
+              height={height}
+              width={width}
+              itemCount={messages.length}
+              itemSize={getSize}
+              onItemsRendered={handleItemsRendered}
+              itemData={messages}
+            >
+              {({ data, index, style }) => (
+                <div style={style}>
+                  <Row data={data} index={index} setSize={setSize} />
+                </div>
+              )}
+            </VariableSizeList>
+          )}
+        </AutoSizer>
+      </Container>
+    </Layout>
   );
 };
 
